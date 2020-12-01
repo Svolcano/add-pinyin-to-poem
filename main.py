@@ -13,8 +13,10 @@ def wash(name='input.txt'):
     with open(file, 'r', encoding='utf-8') as rh:
         lines = rh.read()
         lines = re.sub('\n', '', lines)
+        lines = re.sub('\s+\[', '.', lines)
+        lines = re.sub('\]', '', lines)
         lines = re.sub('译文对照', '', lines)
-        return lines.split('$$$$')
+        return lines.split('$')
 
 def gen_pinyin(line):
     py = pinyin(line, errors='ignore')
@@ -55,10 +57,14 @@ def reader_one_poem(poem):
     poem = poem.replace('===', '\n')
     poem = re.sub('【', '\n', poem, count=1)
     poem = poem.replace('【', '')
+    # poem = poem.replace('[', '')
+    # poem = poem.replace(']', '')
+    poem = poem.replace('、', '')
     poem = poem.replace('】', '') 
     poem = poem.replace('。','。\n') 
+    poem = poem.replace('？','。\n') 
     poem_pieces = poem.split('\n')
-    poem_pieces = [a for a in poem_pieces if a.strip()]
+    poem_pieces = [a.strip() for a in poem_pieces if a.strip()]
     all = []
     for line in poem_pieces:
         py = pinyin(line)
