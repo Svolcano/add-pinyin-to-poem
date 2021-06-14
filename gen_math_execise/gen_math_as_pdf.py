@@ -47,17 +47,19 @@ def to_pdf(filename):
                 n =  1 
             n += 1
     canvas.save()
-
-with open("ti.txt", 'w') as wh:
+target_file = os.path.join(CP, "ti.txt")
+with open(target_file, 'w') as wh:
     n = 600
     hang = 8
     column = 2
     ti = []
     number = 1
     h = 0
+    start = 0
+    end = 9
     while n:
-        a = random.randint(10, 10000)
-        b = random.randint(10, 10000)
+        a = random.randint(start, end)
+        b = random.randint(start, end)
         if a <= b:
             ti.append("{:<28}".format("{:<4} + {:<4} =    ".format(a, b)))
         else:
@@ -71,4 +73,4 @@ with open("ti.txt", 'w') as wh:
             number += 1
             ti = []
         n -= 1
-to_pdf('ti.txt')
+to_pdf(target_file)
